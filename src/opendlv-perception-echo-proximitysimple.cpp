@@ -85,10 +85,6 @@ int32_t main(int32_t argc, char **argv) {
         for (uint32_t azimuthIndex = 0; azimuthIndex < numberOfAzimuths; azimuthIndex++) {
           for (uint32_t sensorIndex = 0; sensorIndex < entriesPerAzimuth; sensorIndex++) {
         
-            if (VERBOSE) {
-              std::cout << "Azimuth " << azimuth << std::endl;
-            }
-           
             if (azimuth > A0 && azimuth < A1) {
             
               float verticalAngle = 0;
@@ -105,6 +101,11 @@ int32_t main(int32_t argc, char **argv) {
               auto byte0 = distances[index++];
               auto byte1 = distances[index++];
               float distance = static_cast<float>( ((0xff & byte0) << 8) | (0xff & byte1) );
+        
+              if (VERBOSE) {
+                std::cout << "Distance " << distance << std::endl;
+              }
+        
               distance /= 100.0f;
 
               if (distance > 1.0f) {
