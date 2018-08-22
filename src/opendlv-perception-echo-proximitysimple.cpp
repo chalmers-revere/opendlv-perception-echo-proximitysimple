@@ -57,6 +57,11 @@ int32_t main(int32_t argc, char **argv) {
 
     auto onPointCloudReading{[&A0, &A1, &Z0, &Z1, &ID, &VERBOSE, &od4, &verticalAngles16, &verticalAngles12, &verticalAngles11, verticalAngles9](cluon::data::Envelope &&envelope)
       {
+
+        if (VERBOSE) {
+          std::cout << "Got point cloud." << std::endl;
+        }
+
         auto pointCloudReading = cluon::extractMessage<opendlv::proxy::PointCloudReading>(std::move(envelope));
 
         auto distances = pointCloudReading.distances();
@@ -79,6 +84,10 @@ int32_t main(int32_t argc, char **argv) {
         float azimuth = startAzimuth;
         for (uint32_t azimuthIndex = 0; azimuthIndex < numberOfAzimuths; azimuthIndex++) {
           for (uint32_t sensorIndex = 0; sensorIndex < entriesPerAzimuth; sensorIndex++) {
+        
+            if (VERBOSE) {
+              std::cout << "Azimuth " << azimuth << std::endl;
+            }
            
             if (azimuth > A0 && azimuth < A1) {
             
@@ -100,6 +109,11 @@ int32_t main(int32_t argc, char **argv) {
 
               if (distance > 1.0f) {
                 float z = distance * sinf(verticalAngle * 3.14f / 180.0f);
+
+
+                if (VERBOSE) {
+                  std::cout << "Z " << z << std::endl;
+                }
 
                 if (z > Z0 && z > Z1) {
                   float xyDistance = distance * cosf(verticalAngle * 3.14f / 180.0f);
