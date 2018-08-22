@@ -103,7 +103,9 @@ int32_t main(int32_t argc, char **argv) {
 
                 if (z > Z0 && z > Z1) {
                   float xyDistance = distance * cosf(verticalAngle * 3.14f / 180.0f);
-                  distanceToObject = xyDistance;
+                  if (!foundObject || foundObject && xyDistance < distanceToObject) {
+                    distanceToObject = xyDistance;
+                  }
                   foundObject = true;
                 }
               }
