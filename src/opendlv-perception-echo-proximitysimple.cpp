@@ -41,7 +41,7 @@ int32_t main(int32_t argc, char **argv) {
     bool const VERBOSE{commandlineArguments.count("verbose") != 0};
 
     float const A0{static_cast<float>(std::stof(commandlineArguments["a0"]))};
-    float const A1{static_cast<float>(std::stof(commandlineArguments["a0"]))};
+    float const A1{static_cast<float>(std::stof(commandlineArguments["a1"]))};
     float const Z0{static_cast<float>(std::stof(commandlineArguments["z0"]))};
     float const Z1{static_cast<float>(std::stof(commandlineArguments["z1"]))};
 
