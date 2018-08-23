@@ -80,35 +80,32 @@ int32_t main(int32_t argc, char **argv) {
         for (uint32_t azimuthIndex = 0; azimuthIndex < numberOfAzimuths; azimuthIndex++) {
           for (uint32_t sensorIndex = 0; sensorIndex < entriesPerAzimuth; sensorIndex++) {
         
-            if (azimuth > A0 && azimuth < A1) {
-            
-              float verticalAngle = 0;
-              if (16 == entriesPerAzimuth) {
-                verticalAngle = verticalAngles16[sensorIndex];
-              } else if (12 == entriesPerAzimuth) {
-                verticalAngle = verticalAngles12[sensorIndex];
-              } else if (11 == entriesPerAzimuth) {
-                verticalAngle = verticalAngles11[sensorIndex];
-              } else if (9 == entriesPerAzimuth) {
-                verticalAngle = verticalAngles9[sensorIndex];
-              }
+            float verticalAngle = 0;
+            if (16 == entriesPerAzimuth) {
+              verticalAngle = verticalAngles16[sensorIndex];
+            } else if (12 == entriesPerAzimuth) {
+              verticalAngle = verticalAngles12[sensorIndex];
+            } else if (11 == entriesPerAzimuth) {
+              verticalAngle = verticalAngles11[sensorIndex];
+            } else if (9 == entriesPerAzimuth) {
+              verticalAngle = verticalAngles9[sensorIndex];
+            }
 
-              auto byte0 = distances[index++];
-              auto byte1 = distances[index++];
-              float distance = static_cast<float>( ((0xff & byte0) << 8) | (0xff & byte1) );
+            auto byte0 = distances[index++];
+            auto byte1 = distances[index++];
+            float distance = static_cast<float>( ((0xff & byte0) << 8) | (0xff & byte1) );
         
-              distance /= 100.0f;
+            distance /= 100.0f;
 
-              if (distance > 1.0f) {
-                float z = distance * sinf(verticalAngle * 3.14f / 180.0f);
+            if (distance > 1.0f) {
+              float z = distance * sinf(verticalAngle * 3.14f / 180.0f);
 
-                if (z > Z0 && z < Z1) {
-                  float xyDistance = distance * cosf(verticalAngle * 3.14f / 180.0f);
-                  if (!foundObject || (foundObject && xyDistance < distanceToObject)) {
-                    distanceToObject = xyDistance;
-                  }
-                  foundObject = true;
+              if (azimuth > A0 && azimuth < A1 && z > Z0 && z < Z1) {
+                float xyDistance = distance * cosf(verticalAngle * 3.14f / 180.0f);
+                if (!foundObject || (foundObject && xyDistance < distanceToObject)) {
+                  distanceToObject = xyDistance;
                 }
+                foundObject = true;
               }
             }
           }
