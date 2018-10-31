@@ -53,6 +53,10 @@ int32_t main(int32_t argc, char **argv) {
     float verticalAngles11[] = {-28.0f, -26.66f, -22.66f, -18.65f, -14.65f, -10.64f, -6.64f, -2.63f, 1.37f, 5.38f, 9.38f};
     float verticalAngles9[] = {-23.99f, -19.99f, -15.98f, -11.98f, -7.97f, -3.97f, 0.04f, 4.04f, 8.05f};
 
+    if (VERBOSE) {
+      std::cout << "Started with range " << A0 << " " << A1 << " and id " << ID << std::endl;
+    }
+
     cluon::OD4Session od4{CID};
 
     auto onPointCloudReading{[&A0, &A1, &Z0, &Z1, &ID, &VERBOSE, &od4, &verticalAngles16, &verticalAngles12, &verticalAngles11, verticalAngles9](cluon::data::Envelope &&envelope)
